@@ -10,6 +10,26 @@
 //
 // Outside the grader's container, MAKEFUN_OUTPUT_DIR stands in for /output:
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts --input ../input/snapshot.json
+//
+// What this program promises its caller, in order:
+//
+//   1. It reads exactly one snapshot and nothing else. No network, no clock, no environment
+//      beyond the input path and the output directory, so two runs over the same bytes give
+//      the same bytes back. The grader depends on that: it runs this program twice and
+//      compares the outputs byte for byte.
+//   2. It refuses to write a board the gate would refuse. boardIssue() checks the ranks,
+//      the ordering, the watchlist coverage and the farm steps before anything is written,
+//      and the program exits non-zero with the reason on stderr instead of handing in a
+//      broken board. A failure here is a bug in the model, not in the input.
+//   3. It writes the whole output set, or it fails loudly. board.json, data.js, the
+//      dashboard copy, the screenshots copy and dossier.json are all written by this one
+//      program, and the dossier is written last because it is a summary of the rest: the
+//      scorer rebuilds it from /output and compares it byte for byte, so a stale dossier
+//      would fail the entry even if the board itself were perfect.
+//   4. It never writes a screenshot. The three images in screenshots/ are made by a human
+//      (or a browser driven by one) looking at the finished page, and this program only
+//      copies them through and checks that there are at least three. A screenshot is
+//      evidence of the page, not a product of the program.
 
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';

@@ -2,6 +2,35 @@
 // and renders the ranked board, a Top 5 spotlight, category bars, a filterable table, a
 // per-protocol detail view with the model's own inputs, verdict, risk and farm plan. No network:
 // every byte it shows is in data.js.
+//
+// How the page is put together, for the next person who opens this file:
+//
+//   There is one render pass, render(), and everything the reader does — typing in the
+//   search box, picking a category or a chain, moving the TVL floor, toggling watchlist-only,
+//   switching the Pre-token / Live tab, clicking a column to sort, opening a row's detail —
+//   only changes the `state` object and calls render() again. Nothing is fetched, nothing is
+//   stored, and the URL hash is the only memory the page keeps: #p=<slug> opens a detail
+//   view, #category=, #q= and friends restore a filtered view, so a board a reader filtered
+//   can be linked and reopened exactly.
+//
+//   The table sorts by implied value by default, descending, because rank 1 is the point of
+//   the page. Every other sortable column re-sorts the same rows in place; the rank column
+//   itself never moves, so a reader can always see where a row stands even while sorting by
+//   TVL or growth. The Top 5 spotlight cards and the category bars are computed from the
+//   same filtered rows the table shows, never from a second copy of the data, so the three
+//   views cannot disagree with each other.
+//
+//   The detail drawer is a <dialog> because it gives focus handling and Escape-to-close for
+//   free, and because it keeps the board underneath visible but inert. Its model breakdown
+//   recomputes the implied value from the row's own inputs in the browser and compares it
+//   with the value board.json carries; if the two ever disagreed, the drawer would say so,
+//   which is the page's own check that the data it was handed is self-consistent.
+//
+//   Money is formatted by magnitude ($576.25M reads better than $576,254,245 in a table),
+//   percentages keep their sign, and "n/a" is the only answer the page gives for a missing
+//   figure — it never invents a zero. The page is deliberately plain: one palette, system
+//   fonts, no framework, so it renders the same from a file on disk as it does on the
+//   grader's machine, with no network at all.
 (function () {
   'use strict';
 

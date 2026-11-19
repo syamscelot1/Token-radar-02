@@ -1,6 +1,11 @@
+[![make.fun · token-radar-01](https://make.fun/badge/token-radar-01.svg)](https://make.fun/bounty/token-radar-01?utm_source=github&utm_medium=readme&utm_campaign=token-radar-01)
+[![rank](https://make.fun/badge/token-radar-01/syamscelot1/Token-radar-02/rank.svg)](https://make.fun/bounty/token-radar-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=token-radar-01)
+[![reward](https://make.fun/badge/token-radar-01/syamscelot1/Token-radar-02/reward.svg)](https://make.fun/bounty/token-radar-01?utm_source=github&utm_medium=readme&utm_campaign=token-radar-01)
+
 # Token Radar — pre-token protocols ranked by implied value
 
 Entry for the make.fun **token-radar-01** bounty ($1,325; deadline 14 Dec 2026).
+See the bounty: [make.fun/bounty/token-radar-01](https://make.fun/bounty/token-radar-01).
 
 A dashboard that finds protocols whose token does not exist yet, ranks them by an
 implied value derived from the sealed DefiLlama snapshot, and shows a reader how to
